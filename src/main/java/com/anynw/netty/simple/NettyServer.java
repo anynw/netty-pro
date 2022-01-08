@@ -6,6 +6,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.NettyRuntime;
 
 /**
  * @author wuhp
@@ -16,6 +17,8 @@ public class NettyServer {
     public static void main(String[] args) throws InterruptedException {
         NettyServer nettyServer = new NettyServer();
         nettyServer.start(8888);
+        // 获取CPU为几核
+        System.out.println(NettyRuntime.availableProcessors());
     }
 
     public void start(int port) throws InterruptedException {
@@ -44,7 +47,7 @@ public class NettyServer {
             System.out.println("服务器 启动了。。。。。。");
             //启动服务器，绑定端口
             ChannelFuture cf = bootstrap.bind(port).sync();
-            cf.channel().closeFuture();
+            cf.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();

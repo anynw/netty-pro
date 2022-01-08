@@ -16,12 +16,12 @@ import java.net.InetSocketAddress;
  * @date 2022/1/8
  */
 public class NettyClient {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         NettyClient nettyClient = new NettyClient();
         nettyClient.connect("127.0.0.1", 8888);
     }
 
-    public void connect(String host, int port) {
+    public void connect(String host, int port) throws InterruptedException {
         NioEventLoopGroup group = new NioEventLoopGroup();
 
 
@@ -39,8 +39,7 @@ public class NettyClient {
 
             ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
             channelFuture.channel().closeFuture().sync();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } finally {
             group.shutdownGracefully();
         }
     }
