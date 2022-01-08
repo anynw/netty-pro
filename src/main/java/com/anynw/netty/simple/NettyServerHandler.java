@@ -27,6 +27,8 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf buf = (ByteBuf) msg;
         System.out.println("客户端发动的消息：" + buf.toString(CharsetUtil.UTF_8));
         System.out.println("客户端地址：" + ctx.channel().remoteAddress());
+        // 释放资源
+        buf.release();
     }
 
     /**
@@ -50,7 +52,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        super.exceptionCaught(ctx, cause);
+        // super.exceptionCaught(ctx, cause);
         ctx.close();
     }
 }

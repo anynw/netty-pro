@@ -14,6 +14,11 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class NettyServer {
 
     public static void main(String[] args) throws InterruptedException {
+        NettyServer nettyServer = new NettyServer();
+        nettyServer.start(8888);
+    }
+
+    public void start(int port) throws InterruptedException {
         //只处理请求，无限循环
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         //工作线程组，处理客户端业务，无限循环
@@ -38,12 +43,12 @@ public class NettyServer {
 
             System.out.println("服务器 启动了。。。。。。");
             //启动服务器，绑定端口
-            ChannelFuture cf = bootstrap.bind(6668).sync();
+            ChannelFuture cf = bootstrap.bind(port).sync();
             cf.channel().closeFuture();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
-
     }
+
 }
