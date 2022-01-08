@@ -22,6 +22,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println("服务器读取线程：" + Thread.currentThread().getName());
         System.out.println("server ctx = " + ctx);
         // msg转成 ByteBuf(Nio提供的)
         ByteBuf buf = (ByteBuf) msg;

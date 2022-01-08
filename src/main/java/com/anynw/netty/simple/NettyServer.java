@@ -22,10 +22,10 @@ public class NettyServer {
     }
 
     public void start(int port) throws InterruptedException {
-        //只处理请求，无限循环
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        //工作线程组，处理客户端业务，无限循环
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        //只处理请求，无限循环，默认1
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        //工作线程组，处理客户端业务，无限循环，默认16
+        EventLoopGroup workerGroup = new NioEventLoopGroup(4);
         try {
 
             // 创建服务端的启动对象
