@@ -26,8 +26,8 @@ public class NIOServer {
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         //循环等待客户端连接
         while (true) {
-            if (selector.select(2000) == 0) {
-                System.out.println("服务器等待了2秒钟，无连接事件");
+            if (selector.select(5000) == 0) {
+                System.out.println("服务器等待了5秒钟，无连接事件");
                 continue;
             }
 
@@ -43,6 +43,8 @@ public class NIOServer {
                     socketChannel.configureBlocking(false);
                     // 将socketChannel 注册到selector 关注事件为OP_READ 同时给socketChannel 关联buffer
                     socketChannel.register(selector, SelectionKey.OP_READ, ByteBuffer.allocate(1024));
+
+                    System.out.println("客户端连接后，注册的selectionKeys的数量 = " + selector.keys().size());
                 }
                 if (key.isReadable()) {//OP_READ
                     //通过key 反向获取对应的channel
