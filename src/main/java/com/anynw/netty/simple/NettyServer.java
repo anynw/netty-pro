@@ -14,6 +14,7 @@ import io.netty.util.NettyRuntime;
  */
 public class NettyServer {
 
+
     public static void main(String[] args) throws InterruptedException {
         NettyServer nettyServer = new NettyServer();
         nettyServer.start(8888);
@@ -44,9 +45,22 @@ public class NettyServer {
                     }).option(ChannelOption.SO_BACKLOG, 128)//设置线程连接数量
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
 
-            System.out.println("服务器 启动了。。。。。。");
             //启动服务器，绑定端口
             ChannelFuture cf = bootstrap.bind(port).sync();
+            System.out.println("服务器 启动了。。。。。。");
+
+            //注册监听器，监控我们关心的事件
+            cf.addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    if (cf.isSuccess()) {
+                        System.out.println("监听端口" + port + "成功");
+                    } else {
+                        System.out.println("监听端口" + port + "失败");
+                    }
+                }
+            });
+
             cf.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
