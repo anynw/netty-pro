@@ -1,5 +1,6 @@
 package com.anynw.netty.simple;
 
+import com.anynw.netty.hello.HelloClientIntHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -15,13 +16,14 @@ import java.net.InetSocketAddress;
  * @date 2022/1/8
  */
 public class NettyClient {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         NettyClient nettyClient = new NettyClient();
         nettyClient.connect("127.0.0.1", 8888);
     }
 
-    public void connect(String host, int port) throws InterruptedException {
+    public void connect(String host, int port) {
         NioEventLoopGroup group = new NioEventLoopGroup();
+
 
         try {
             Bootstrap bootstrap = new Bootstrap();
@@ -35,13 +37,10 @@ public class NettyClient {
                         }
                     });
 
-            System.out.println("客户端 ok.......");
-            // 启动客户端，连接服务端
-            // ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress("127.0.0.1",8888));
             ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
-            //关闭通道监听
             channelFuture.channel().closeFuture().sync();
-        } finally {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
             group.shutdownGracefully();
         }
     }

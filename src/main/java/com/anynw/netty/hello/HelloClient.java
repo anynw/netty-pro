@@ -31,7 +31,7 @@ public class HelloClient {
 
             // Start the client.
             ChannelFuture f = b.connect(host, port).sync();
-
+            System.out.println("hello client is ok......");
             // Wait until the connection is closed.
             f.channel().closeFuture().sync();
         } finally {

@@ -36,7 +36,7 @@ public class HelloServer {
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
 
             ChannelFuture f = b.bind(port).sync();
-
+            System.out.println("hello server is ready......");
             f.channel().closeFuture().sync();
         } finally {
             workerGroup.shutdownGracefully();
