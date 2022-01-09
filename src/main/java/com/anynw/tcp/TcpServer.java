@@ -7,6 +7,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
+ * TCP粘包和拆包问题解决方案：
+ * 1.使用自定义协议+编解码器来解决
+ * 2.主要是解决服务器每次读取数据长度
  * @author wuhp
  * @date 2022/1/8
  */
