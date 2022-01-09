@@ -14,6 +14,9 @@ public class MyClientInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline p = ch.pipeline();
         //加入一个出栈的handler ，对数据进行编码
         p.addLast(new MyLong2ByteEncoder());
+
+        p.addLast(new MyByte2LongDecoder());
+
         //加入一个自定义的handler，处理业务逻辑
         p.addLast(new MyClientHandler());
     }

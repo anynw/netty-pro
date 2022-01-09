@@ -15,6 +15,8 @@ public class MyClientHandler extends SimpleChannelInboundHandler<Long> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Long msg) throws Exception {
         System.out.println("Client:MyClientHandler channelRead0");
+        System.out.println("server ip = " + ctx.channel().remoteAddress());
+        System.out.println("receive server msg = " + msg);
     }
 
     /**
