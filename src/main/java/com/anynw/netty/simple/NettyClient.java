@@ -9,6 +9,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
 import java.net.InetSocketAddress;
 
@@ -35,7 +36,7 @@ public class NettyClient {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline p = ch.pipeline();
-
+                            p.addLast("encoder",new ProtobufEncoder());
                             ch.pipeline().addLast(new NettyClientHandler());
                         }
                     });
