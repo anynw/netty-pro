@@ -15,6 +15,8 @@ public class TcpClientInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline p = ch.pipeline();
         //加入编码器
         p.addLast(new MessageEncoder());
+        //客户端接收服务器的消息，加入解码器
+        p.addLast(new MessageDecoder());
         p.addLast(new TcpClientHandler());
     }
 }

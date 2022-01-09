@@ -10,6 +10,8 @@ import io.netty.util.CharsetUtil;
  */
 public class TcpClientHandler extends SimpleChannelInboundHandler<MessageProtocol> {
 
+    private int count;
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("TcpClientHandler channelActive is called");
@@ -28,7 +30,11 @@ public class TcpClientHandler extends SimpleChannelInboundHandler<MessageProtoco
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageProtocol msg) throws Exception {
         System.out.println("TcpClientHandler channelRead0 is called");
-        System.out.println(msg);
+
+        int len = msg.getLen();
+        byte[] content = msg.getContent();
+        System.out.println("client recieve data is content = " + new String(content, CharsetUtil.UTF_8) + ";len = " + len);
+        System.out.println("client recieve data count is " + (++this.count));
     }
 
     @Override

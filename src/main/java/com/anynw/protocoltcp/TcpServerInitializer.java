@@ -15,6 +15,8 @@ public class TcpServerInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = ch.pipeline();
         //加入解码器
         pipeline.addLast(new MessageDecoder());
+        //服务端回复消息，加入编码器
+        pipeline.addLast(new MessageEncoder());
         pipeline.addLast(new TcpServerHandler());
     }
 }
