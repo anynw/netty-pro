@@ -1,11 +1,13 @@
 package com.anynw.netty.simple;
 
+import com.anynw.codec.StudentPOJO;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.util.NettyRuntime;
 
 /**
@@ -34,13 +36,13 @@ public class NettyServer {
             //配置参数,链式编程
             bootstrap.group(bossGroup, workerGroup)//设置两个线程组
                     .channel(NioServerSocketChannel.class)//使用NioServerSocketChannel作为服务器的通道实现
-
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         //给pipeline设置处理器
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new NettyServerHandler());
+                            ChannelPipeline p = ch.pipeline();
+                            p.addLast("decoder",new ProtobufDecoder(StudentPOJO.Student.getDefaultInstance()));
+                            p.addLast(new NettyServerHandler());
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128)//设置线程连接数量
                     .childOption(ChannelOption.SO_KEEPALIVE, true);

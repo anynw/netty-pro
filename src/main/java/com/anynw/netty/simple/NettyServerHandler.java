@@ -1,5 +1,6 @@
 package com.anynw.netty.simple;
 
+import com.anynw.codec.StudentPOJO;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -22,14 +23,18 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("服务器读取线程：" + Thread.currentThread().getName());
-        System.out.println("server ctx = " + ctx);
-        // msg转成 ByteBuf(Nio提供的)
-        ByteBuf buf = (ByteBuf) msg;
-        System.out.println("客户端发动的消息：" + buf.toString(CharsetUtil.UTF_8));
-        System.out.println("客户端地址：" + ctx.channel().remoteAddress());
-        // 释放资源
-        buf.release();
+        // System.out.println("服务器读取线程：" + Thread.currentThread().getName());
+        // System.out.println("server ctx = " + ctx);
+        // // msg转成 ByteBuf(Nio提供的)
+        // ByteBuf buf = (ByteBuf) msg;
+        // System.out.println("客户端发动的消息：" + buf.toString(CharsetUtil.UTF_8));
+        // System.out.println("客户端地址：" + ctx.channel().remoteAddress());
+        // // 释放资源
+        // buf.release();
+
+        //读取客户端发送的student对象
+        StudentPOJO.Student student = (StudentPOJO.Student) msg;
+        System.out.println("客户端发动的数据：；id = " + student.getId() + "name = " + student.getName());
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.anynw.netty.simple;
 
+import com.anynw.codec.StudentPOJO;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -20,8 +21,13 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("client ctx = " + ctx);
-        ctx.writeAndFlush(Unpooled.copiedBuffer("hello,server:哈哈哈😄", CharsetUtil.UTF_8));
+        // System.out.println("client ctx = " + ctx);
+        // ctx.writeAndFlush(Unpooled.copiedBuffer("hello,server:哈哈哈😄", CharsetUtil.UTF_8));
+
+        // 需要加入编码器 encoder
+        StudentPOJO.Student student = StudentPOJO.Student.newBuilder().setId(4).setName("张三").build();
+        ctx.writeAndFlush(student);
+
     }
 
     /**
