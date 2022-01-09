@@ -1,23 +1,21 @@
 package com.anynw.handler;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
+import org.apache.log4j.Logger;
 
 /**
  * @author wuhp
  * @date 2022/1/9
  */
 public class MyServer {
+
+    private static final Logger logger = Logger.getLogger(MyServer.class);
     public static void main(String[] args) throws InterruptedException {
         MyServer myServer = new MyServer();
+        logger.info("MyServer started");
         myServer.start(7000);
     }
 
